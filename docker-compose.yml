@@ -1,0 +1,27 @@
+# v2 syntax
+version: '2'
+
+services:
+
+  mysql-phpql:
+    image: ambientum/mysql:5.7
+    container_name: mysql-phpql
+    volumes:
+      - ./.docker/mysql:/var/lib/mysql
+    ports:
+      - "3101:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=phpql
+      - MYSQL_DATABASE=phpql
+      - MYSQL_USER=phpql
+      - MYSQL_PASSWORD=phpql
+
+  apache-phpql:
+    image: ambientum/php:7.1-apache
+    container_name: apache-phpql
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "8101:8080"
+    links:
+      - mysql-phpql
